@@ -19,6 +19,7 @@ namespace MainLibrary
         {
             _path = pathToDll;
             FillAssemblyTypes();
+            ProcessExtensionTypes();
         }
 
         private void FillAssemblyTypes()
@@ -41,6 +42,73 @@ namespace MainLibrary
                 _path = null;
             }
            
+        }
+
+        private void ProcessExtensionTypes()
+        {
+            var extensionMethods = CheckForExtensionMethods();
+            foreach (var method in extensionMethods)
+            {
+                var type = method.Parametrs[0].ParameterType;
+                AddForExtensionType(type, method);
+            }
+        }
+
+        private void AddForExtensionType(Type typeInfo, MethodInfoCollector methodCollector)
+        {
+
+            if (!_namespaceTypes.ContainsKey(typeInfo.Namespace))
+            {
+                _namespaceTypes[typeInfo.Namespace] = new List<TypeInfoCollector>();
+            }
+            var typeCollector = _namespaceTypes[typeInfo.Namespace].Find(t => t.TypeInfo.FullName.Equals(typeInfo.FullName));
+            if (typeCollector is null)
+            {
+                _namespaceTypes[typeInfo.Namespace].Add(new TypeInfoCollector(typeInfo));
+            }
+            _namespaceTypes[typeInfo.Namespace].Find(t => t.TypeInfo.FullName.Equals(typeInfo.FullName)).Methods.Add(methodCollector);
+        }
+
+        private List<MethodInfoCollector> CheckForExtensionMethods()
+        {
+            var allExtensionMethods = new List<MethodInfoCollector>();
+
+            foreach(var key in _namespaceTypes.Keys)
+            {
+                var typesForChecking = _namespaceTypes[key];
+                int i = 0; 
+                while (typesForChecking.Count > i)
+                {
+                    var extMethods = GetExtensionMethods(typesForChecking[i]);
+                    if (extMethods.Count != 0)
+                    {
+                        allExtensionMethods.AddRange(extMethods);
+                        //TO DO Try for find Type of first argument
+                        //If not then creating that type in its namespace
+                        //typesForChecking.RemoveAt(i);
+                    }
+                    i++;
+                }
+            }
+
+            return allExtensionMethods;
+        }
+
+        private List<MethodInfoCollector> GetExtensionMethods(TypeInfoCollector typeCollector)
+        {
+
+            List<MethodInfoCollector> extensionMethods = new List<MethodInfoCollector>();
+            foreach(var method in typeCollector.Methods)
+            {
+                if (!method.Extension.Equals(""))
+                {
+                    var copyMethod = method;
+                    extensionMethods.Add(method);
+                }
+                
+            }
+
+            return extensionMethods;
         }
 
         public void ConsoleWrite()

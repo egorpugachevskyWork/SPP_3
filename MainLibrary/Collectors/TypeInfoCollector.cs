@@ -10,7 +10,7 @@ namespace MainLibrary.Collectors
 {
     public class TypeInfoCollector
     {
-        private const BindingFlags _flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
+        private const BindingFlags _flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic;// | BindingFlags.DeclaredOnly;
         public string Name { get; }
 
         public Type TypeInfo { get; }
@@ -32,6 +32,11 @@ namespace MainLibrary.Collectors
             Methods = t.GetMethods(_flags).Where(m => !m.IsConstructor && !m.IsDefined(typeof(CompilerGeneratedAttribute))).Select(m => new MethodInfoCollector(m)).ToList();
             Properties = t.GetProperties(_flags).Where(p => !p.IsDefined(typeof(CompilerGeneratedAttribute))).Select(p => new PropertyInfoCollector(p)).ToList();
             Constructors = t.GetConstructors(_flags).Where(c => !c.IsDefined(typeof(CompilerGeneratedAttribute))).Select(c => new ConstructorInfoCollector(c)).ToList();  
+        }
+
+        public void AddExtensionMethods(List<MethodInfoCollector> methods)
+        {
+            Methods.AddRange(methods);
         }
 
         public override string ToString()

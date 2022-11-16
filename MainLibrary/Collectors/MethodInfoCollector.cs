@@ -20,7 +20,7 @@ namespace MainLibrary.Collectors
 
         public string Extension { get; }
 
-        public ParameterInfo[] Parametrs { get; }
+        public List<ParameterInfo> Parametrs { get; }
 
         public List<string> GenericTypes { get; }
 
@@ -35,14 +35,14 @@ namespace MainLibrary.Collectors
             Static = method.IsStatic ? "static " : "";
             Name = method.Name + " ";
             Extension = method.IsDefined(typeof(ExtensionAttribute), true) ? "extension " : "";
-            Parametrs = method.GetParameters();
+            Parametrs = method.GetParameters().ToList();
             Abstract = method.IsAbstract ? "abstract " : "";
         }
 
         public override string ToString()
         {
-            var result = "";
-            result = Extension + Modificator + Abstract + Static + ReturnTypeName + Name;
+            var result = "METHOD: ";
+            result += Extension + Modificator + Abstract + Static + ReturnTypeName + Name;
             if (GenericTypes.Count != 0)
             {
                 result += "<";

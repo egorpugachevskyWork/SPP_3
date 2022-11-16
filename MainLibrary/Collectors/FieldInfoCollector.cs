@@ -27,7 +27,8 @@ namespace MainLibrary.Collectors
 
         public override string ToString()
         {
-            return Modificator + Static + TypeName + Name;
+            var result = "FIELD: ";
+            return result + Modificator + Static + TypeName + Name;
         }
 
        

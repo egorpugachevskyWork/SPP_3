@@ -24,13 +24,13 @@ namespace MainLibrary.Collectors
             if (property.CanRead)
             {
                 var method = property.GetGetMethod();   
-                if (method.IsPublic)
+                if (method is not null && method.IsPublic)
                 {
                     ModificatorGet = "public ";
                 }
-                else if (method.IsPrivate)
+                else
                 {
-                    ModificatorGet = "private ";
+                    ModificatorGet = "non-pulibc ";
                 }
             }
             else
@@ -39,14 +39,14 @@ namespace MainLibrary.Collectors
             }
             if (property.CanWrite)
             {
-                var method = property.GetGetMethod();
-                if (method.IsPublic)
+                var method = property.GetSetMethod();
+                if (method is not null && method.IsPublic)
                 {
                     ModificatorSet = "public ";
                 }
-                else if (method.IsPrivate)
+                else 
                 {
-                    ModificatorSet = "private ";
+                    ModificatorSet = "non-public ";
                 }
             }
             else
@@ -58,7 +58,7 @@ namespace MainLibrary.Collectors
 
         public override string ToString()
         {
-            var result = ReturnTypeName + Name + "{";
+            var result = "PROPERTY: " + ReturnTypeName + Name + "{";
             if (!ModificatorGet.Equals(""))
             {
                 result += ModificatorGet + "get; ";

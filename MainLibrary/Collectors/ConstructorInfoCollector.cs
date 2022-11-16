@@ -15,7 +15,7 @@ namespace MainLibrary.Collectors
 
         public string Name { get; }
 
-        public ParameterInfo[] Parametrs { get; }
+        public List<ParameterInfo> Parametrs { get; }
 
         public List<string> GenericTypes { get; }
 
@@ -24,14 +24,14 @@ namespace MainLibrary.Collectors
             Modificator = constructor.IsPublic ? "public " : "non-public ";
             Static = constructor.IsStatic ? "static " : "";
             Name = TypesConverter.ChangeTypeName(constructor.DeclaringType.Name) + " ";
-            Parametrs = constructor.GetParameters();
+            Parametrs = constructor.GetParameters().ToList();
             GenericTypes = new List<string>();//constructor.GetGenericArguments().Select(g => g.Name).ToList();
         }
 
         public override string ToString()
         {
-            var result = "";
-            result = Modificator + Static + Name;
+            var result = "CONSTRUCTOR: ";
+            result += Modificator + Static + Name;
             if (GenericTypes.Count != 0)
             {
                 result += "<";
