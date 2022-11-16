@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,11 +28,12 @@ namespace MainLibrary
                 var asm = Assembly.LoadFrom(_path);
                 foreach(var type in asm.GetTypes())
                 {
-                    if (!_namespaceTypes.ContainsKey(type.Namespace))
+                    if (!_namespaceTypes.ContainsKey(type.Namespace) && !type.IsDefined(typeof(CompilerGeneratedAttribute)))
                     {
                         _namespaceTypes[type.Namespace] = new List<TypeInfoCollector>();
                     }
-                    _namespaceTypes[type.Namespace].Add(new TypeInfoCollector(type));
+                    if (!type.IsDefined(typeof(CompilerGeneratedAttribute)))
+                        _namespaceTypes[type.Namespace].Add(new TypeInfoCollector(type));
                 }
             }
             catch (Exception ex)
@@ -47,19 +49,15 @@ namespace MainLibrary
             foreach(var key in _namespaceTypes.Keys)
             {
                 Console.WriteLine(key);
-                foreach(var value in _namespaceTypes[key])
-                {
-                    for (int i = 0; i < step; i++)
-                    {
-                        Console.Write("   ");
-                    }
-                    Console.WriteLine(value.ToString());
-                    step++;
 
                     var namespaceTypes = _namespaceTypes[key];
+                    step++;
                     foreach(var namespaceType in namespaceTypes)
                     {
-                        foreach(var field in namespaceType.Fields)
+                        Console.WriteLine(namespaceType.ToString());
+                       // step++;
+
+                        foreach (var field in namespaceType.Fields)
                         {
                             for (int i = 0; i < step; i++)
                             {
@@ -100,7 +98,6 @@ namespace MainLibrary
 
                     step--;
 
-                }
             }
         }
     }

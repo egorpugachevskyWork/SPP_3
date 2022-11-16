@@ -26,25 +26,23 @@ namespace MainLibrary.Collectors
 
         public string Abstract { get; }
 
-        public string Virtual { get; }
 
         public MethodInfoCollector(MethodInfo method)
         {
             Modificator = method.IsPublic ? "public " : "non-public ";
-            ReturnTypeName = method.ReturnType.Name + " ";
+            ReturnTypeName = TypesConverter.ChangeTypeName(method.ReturnType.Name) + " ";
             GenericTypes = method.GetGenericArguments().Select(g => g.Name).ToList();
             Static = method.IsStatic ? "static " : "";
             Name = method.Name + " ";
             Extension = method.IsDefined(typeof(ExtensionAttribute), true) ? "extension " : "";
             Parametrs = method.GetParameters();
             Abstract = method.IsAbstract ? "abstract " : "";
-            Virtual = method.IsVirtual ? "virtual " : "";
         }
 
         public override string ToString()
         {
             var result = "";
-            result = Extension + Modificator + Abstract + Virtual + Static + ReturnTypeName + Name;
+            result = Extension + Modificator + Abstract + Static + ReturnTypeName + Name;
             if (GenericTypes.Count != 0)
             {
                 result += "<";
@@ -52,22 +50,21 @@ namespace MainLibrary.Collectors
                 {
                     result += type + ",";
                 }
-                result.Remove(result.Length - 1);
-                result += ">(";
+                result = result.Remove(result.Length - 1);
+                result += ">";
             }
-            else
-            {
-                result += "(";
-            }
+
+            result += "( ";
 
             foreach(var param in Parametrs)
             {
-                result += $"{param.ParameterType} {param.Name} ,";
+                result += $"{TypesConverter.ChangeTypeName(param.ParameterType.Name)} {param.Name} ,";
             }
-            result.Remove(result.Length - 1);
+            result = result.Remove(result.Length - 1);
             result += ")";
             return result;
 
         }
+
     }
 }

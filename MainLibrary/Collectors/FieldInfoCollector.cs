@@ -20,7 +20,7 @@ namespace MainLibrary.Collectors
         public FieldInfoCollector(FieldInfo field)
         {
             Modificator = field.IsPublic ? "public " : "non-public ";
-            TypeName = field.FieldType.Name + " ";
+            TypeName = TypesConverter.ChangeTypeName(field.FieldType.Name) + " ";
             Static = field.IsStatic ? "static " : "";
             Name = field.Name + " ";
         }
@@ -29,5 +29,7 @@ namespace MainLibrary.Collectors
         {
             return Modificator + Static + TypeName + Name;
         }
+
+       
     }
 }

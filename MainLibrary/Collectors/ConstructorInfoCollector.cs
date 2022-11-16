@@ -23,7 +23,7 @@ namespace MainLibrary.Collectors
         {
             Modificator = constructor.IsPublic ? "public " : "non-public ";
             Static = constructor.IsStatic ? "static " : "";
-            Name = constructor.DeclaringType.Name + " ";
+            Name = TypesConverter.ChangeTypeName(constructor.DeclaringType.Name) + " ";
             Parametrs = constructor.GetParameters();
             GenericTypes = new List<string>();//constructor.GetGenericArguments().Select(g => g.Name).ToList();
         }
@@ -39,22 +39,20 @@ namespace MainLibrary.Collectors
                 {
                     result += type + ",";
                 }
-                result.Remove(result.Length - 1);
-                result += ">(";
+                result= result.Remove(result.Length - 1);
+                result += ">";
             }
-            else
-            {
-                result += "(";
-            }
+            result += "( ";
 
             foreach (var param in Parametrs)
             {
-                result += $"{param.ParameterType} {param.Name} ,";
+                result += $"{TypesConverter.ChangeTypeName(param.ParameterType.Name)} {param.Name} ,";
             }
-            result.Remove(result.Length - 1);
+            result = result.Remove(result.Length - 1);
             result += ")";
             return result;
 
         }
+
     }
 }

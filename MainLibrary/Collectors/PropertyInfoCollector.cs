@@ -19,7 +19,7 @@ namespace MainLibrary.Collectors
 
         public PropertyInfoCollector(PropertyInfo property)
         {
-            ReturnTypeName = property.PropertyType.Name + " ";
+            ReturnTypeName = TypesConverter.ChangeTypeName(property.PropertyType.Name) + " ";
             Name = property.Name + " ";
             if (property.CanRead)
             {
@@ -70,5 +70,7 @@ namespace MainLibrary.Collectors
             result += "}";
             return result; 
         }
+
+       
     }
 }

@@ -10,7 +10,7 @@ namespace MainLibrary.Collectors
 {
     public class TypeInfoCollector
     {
-        private const BindingFlags _flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic;
+        private const BindingFlags _flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly;
         public string Name { get; }
 
         public Type TypeInfo { get; }
@@ -39,14 +39,22 @@ namespace MainLibrary.Collectors
             
             var modificator = TypeInfo.IsPublic ? "public " : "non-public ";
             var result = modificator;
-            var isAbstract = TypeInfo.IsAbstract ? "abstract " : "";
-            var isClass = TypeInfo.IsClass ? "class " : "";
-            var isInterface = TypeInfo.IsInterface ? "interface " : "";
-            if (isClass.Equals("") && isAbstract.Equals("") && isInterface.Equals(""))
+            
+            if (TypeInfo.IsInterface)
             {
-                result += "struct ";
+                result += "interface ";
             }
-            result += isInterface + isAbstract + isClass + Name;
+            else if (TypeInfo.IsAbstract)
+            {
+                result += "abstract class";
+
+            }
+            else
+            {
+                result += "class ";
+            }
+            
+            result += Name;
             return result;
         }
     }
