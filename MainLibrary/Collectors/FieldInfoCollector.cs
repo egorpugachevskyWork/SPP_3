@@ -19,10 +19,10 @@ namespace MainLibrary.Collectors
 
         public FieldInfoCollector(FieldInfo field)
         {
-            Modificator = field.IsPublic ? "public " : "non-public";
-            TypeName = field.FieldType.Name;
-            Static = field.IsStatic ? "static" : "";
-            Name = field.Name;
+            Modificator = field.IsPublic ? "public " : "non-public ";
+            TypeName = field.FieldType.Name + " ";
+            Static = field.IsStatic ? "static " : "";
+            Name = field.Name + " ";
         }
 
         public override string ToString()

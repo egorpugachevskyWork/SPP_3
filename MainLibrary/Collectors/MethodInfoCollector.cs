@@ -30,11 +30,11 @@ namespace MainLibrary.Collectors
 
         public MethodInfoCollector(MethodInfo method)
         {
-            Modificator = method.IsPublic ? "public " : "non-public";
-            ReturnTypeName = method.ReturnType.Name;
+            Modificator = method.IsPublic ? "public " : "non-public ";
+            ReturnTypeName = method.ReturnType.Name + " ";
             GenericTypes = method.GetGenericArguments().Select(g => g.Name).ToList();
             Static = method.IsStatic ? "static " : "";
-            Name = method.Name;
+            Name = method.Name + " ";
             Extension = method.IsDefined(typeof(ExtensionAttribute), true) ? "extension " : "";
             Parametrs = method.GetParameters();
             Abstract = method.IsAbstract ? "abstract " : "";

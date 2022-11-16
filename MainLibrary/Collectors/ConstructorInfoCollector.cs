@@ -21,11 +21,11 @@ namespace MainLibrary.Collectors
 
         public ConstructorInfoCollector(ConstructorInfo constructor)
         {
-            Modificator = constructor.IsPublic ? "public " : "non-public";
-            Static = constructor.IsStatic ? "static" : "";
-            Name = constructor.DeclaringType.Name;
+            Modificator = constructor.IsPublic ? "public " : "non-public ";
+            Static = constructor.IsStatic ? "static " : "";
+            Name = constructor.DeclaringType.Name + " ";
             Parametrs = constructor.GetParameters();
-            GenericTypes = constructor.GetGenericArguments().Select(g => g.Name).ToList();
+            GenericTypes = new List<string>();//constructor.GetGenericArguments().Select(g => g.Name).ToList();
         }
 
         public override string ToString()

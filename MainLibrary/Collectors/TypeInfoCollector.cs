@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,16 +28,16 @@ namespace MainLibrary.Collectors
             TypeInfo = t;
             Name = t.Name;
 
-            Fields = t.GetFields(_flags).Select(f => new FieldInfoCollector(f) ).ToList();
-            Methods = t.GetMethods(_flags).Where(m => !m.IsConstructor).Select(m => new MethodInfoCollector(m)).ToList();
-            Properties = t.GetProperties(_flags).Select(p => new PropertyInfoCollector(p)).ToList();
-            Constructors = t.GetConstructors(_flags).Select(c => new ConstructorInfoCollector(c)).ToList();  
+            Fields = t.GetFields(_flags).Where(f => !f.IsDefined(typeof(CompilerGeneratedAttribute))).Select(f => new FieldInfoCollector(f) ).ToList();
+            Methods = t.GetMethods(_flags).Where(m => !m.IsConstructor && !m.IsDefined(typeof(CompilerGeneratedAttribute))).Select(m => new MethodInfoCollector(m)).ToList();
+            Properties = t.GetProperties(_flags).Where(p => !p.IsDefined(typeof(CompilerGeneratedAttribute))).Select(p => new PropertyInfoCollector(p)).ToList();
+            Constructors = t.GetConstructors(_flags).Where(c => !c.IsDefined(typeof(CompilerGeneratedAttribute))).Select(c => new ConstructorInfoCollector(c)).ToList();  
         }
 
         public override string ToString()
         {
             
-            var modificator = TypeInfo.IsPublic ? "public " : "non-public";
+            var modificator = TypeInfo.IsPublic ? "public " : "non-public ";
             var result = modificator;
             var isAbstract = TypeInfo.IsAbstract ? "abstract " : "";
             var isClass = TypeInfo.IsClass ? "class " : "";

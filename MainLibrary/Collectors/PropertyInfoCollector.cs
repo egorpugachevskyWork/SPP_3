@@ -19,8 +19,8 @@ namespace MainLibrary.Collectors
 
         public PropertyInfoCollector(PropertyInfo property)
         {
-            ReturnTypeName = property.PropertyType.Name;
-            Name = property.Name;
+            ReturnTypeName = property.PropertyType.Name + " ";
+            Name = property.Name + " ";
             if (property.CanRead)
             {
                 var method = property.GetGetMethod();   
