@@ -9,9 +9,9 @@ namespace MainLibrary.Collectors
 {
     public class PropertyInfoCollector
     {
-        public string ModificatorGet { get; }
+        public string ModificatorGet { get; } = ""; 
 
-        public string ModificatorSet { get; }
+        public string ModificatorSet { get; } = "";
 
         public string ReturnTypeName { get; }
 
@@ -54,6 +54,21 @@ namespace MainLibrary.Collectors
                 ModificatorSet = "";
             }
             
+        }
+
+        public override string ToString()
+        {
+            var result = ReturnTypeName + Name + "{";
+            if (!ModificatorGet.Equals(""))
+            {
+                result += ModificatorGet + "get; ";
+            }
+            if (!ModificatorSet.Equals(""))
+            {
+                result += ModificatorSet + "set; ";
+            }
+            result += "}";
+            return result; 
         }
     }
 }

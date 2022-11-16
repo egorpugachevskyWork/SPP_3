@@ -27,5 +27,34 @@ namespace MainLibrary.Collectors
             Parametrs = constructor.GetParameters();
             GenericTypes = constructor.GetGenericArguments().Select(g => g.Name).ToList();
         }
+
+        public override string ToString()
+        {
+            var result = "";
+            result = Modificator + Static + Name;
+            if (GenericTypes.Count != 0)
+            {
+                result += "<";
+                foreach (var type in GenericTypes)
+                {
+                    result += type + ",";
+                }
+                result.Remove(result.Length - 1);
+                result += ">(";
+            }
+            else
+            {
+                result += "(";
+            }
+
+            foreach (var param in Parametrs)
+            {
+                result += $"{param.ParameterType} {param.Name} ,";
+            }
+            result.Remove(result.Length - 1);
+            result += ")";
+            return result;
+
+        }
     }
 }

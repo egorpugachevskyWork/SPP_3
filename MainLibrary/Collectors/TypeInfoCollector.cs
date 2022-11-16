@@ -32,5 +32,21 @@ namespace MainLibrary.Collectors
             Properties = t.GetProperties(_flags).Select(p => new PropertyInfoCollector(p)).ToList();
             Constructors = t.GetConstructors(_flags).Select(c => new ConstructorInfoCollector(c)).ToList();  
         }
+
+        public override string ToString()
+        {
+            
+            var modificator = TypeInfo.IsPublic ? "public " : "non-public";
+            var result = modificator;
+            var isAbstract = TypeInfo.IsAbstract ? "abstract " : "";
+            var isClass = TypeInfo.IsClass ? "class " : "";
+            var isInterface = TypeInfo.IsInterface ? "interface " : "";
+            if (isClass.Equals("") && isAbstract.Equals("") && isInterface.Equals(""))
+            {
+                result += "struct ";
+            }
+            result += isInterface + isAbstract + isClass + Name;
+            return result;
+        }
     }
 }

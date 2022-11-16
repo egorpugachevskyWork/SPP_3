@@ -24,5 +24,10 @@ namespace MainLibrary.Collectors
             Static = field.IsStatic ? "static" : "";
             Name = field.Name;
         }
+
+        public override string ToString()
+        {
+            return Modificator + Static + TypeName + Name;
+        }
     }
 }
