@@ -17,12 +17,15 @@ namespace MainLibrary.Collectors
 
         public ParameterInfo[] Parametrs { get; }
 
+        public List<string> GenericTypes { get; }
+
         public ConstructorInfoCollector(ConstructorInfo constructor)
         {
             Modificator = constructor.IsPublic ? "public " : "non-public";
             Static = constructor.IsStatic ? "static" : "";
             Name = constructor.DeclaringType.Name;
             Parametrs = constructor.GetParameters();
+            GenericTypes = constructor.GetGenericArguments().Select(g => g.Name).ToList();
         }
     }
 }

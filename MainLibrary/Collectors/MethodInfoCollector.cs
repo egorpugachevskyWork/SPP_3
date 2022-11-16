@@ -22,10 +22,13 @@ namespace MainLibrary.Collectors
 
         public ParameterInfo[] Parametrs { get; }
 
+        public List<string> GenericTypes { get; }
+
         public MethodInfoCollector(MethodInfo method)
         {
             Modificator = method.IsPublic ? "public " : "non-public";
             ReturnTypeName = method.ReturnType.Name;
+            GenericTypes = method.GetGenericArguments().Select(g => g.Name).ToList();
             Static = method.IsStatic ? "static" : "";
             Name = method.Name;
             Extension = method.IsDefined(typeof(ExtensionAttribute), true) ? "extension " : "";
