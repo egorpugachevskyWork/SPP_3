@@ -25,6 +25,7 @@ namespace WPF
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new TreeViewModel();
         }
 
 

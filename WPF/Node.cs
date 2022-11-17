@@ -12,7 +12,7 @@ namespace WPF
     public class Node : INotifyPropertyChanged
     {
         private string _data;
-        public ObservableCollection<Node> Nodes { get; set; }
+        public ObservableCollection<Node> Nodes { get; set; } = new ObservableCollection<Node>();
 
         public string Data { 
             get { return _data; }

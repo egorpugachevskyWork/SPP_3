@@ -11,10 +11,13 @@
             <Button  x:Name="DllBtn" Command ="{Binding OpenDllCommand}" Height ="50" Margin="0,0,0,387">Open</Button>
         </StackPanel>
 
-        <TreeView Name ="treeView1" Margin="0,69,0,0">
-            <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
-                <TextBlock Text="{Binding Data}" />
-            </HierarchicalDataTemplate >
+        <TreeView Name ="treeView1" Margin="0,69,0,0" ItemsSource="{Binding Namespaces}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                    <TextBlock Text="{Binding Data}" />
+                </HierarchicalDataTemplate >
+            </TreeView.ItemTemplate>
+            
         </TreeView>
     </Grid>
     

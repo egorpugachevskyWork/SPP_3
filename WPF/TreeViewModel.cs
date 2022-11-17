@@ -16,11 +16,18 @@ namespace WPF
     {
         private Node _selectedNode;
 
-        private TreeView _treeView;
-
         private CustomCommand _openFileCommand;
 
-        public ObservableCollection<Node> Nodes { get; set; }
+        public ObservableCollection<Node> Namespaces { 
+            get { return _namespace; }
+            set
+            {
+                _namespace = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Node> _namespace;
         public Node SelectedNode
         {
             get { return _selectedNode; }
@@ -30,6 +37,7 @@ namespace WPF
                 OnPropertyChanged("SelectedNode");
             }
         }
+
             
         public CustomCommand OpenDllCommand
         {
@@ -59,7 +67,7 @@ namespace WPF
         private void ManageTreeData(string path)
         {
             var asmCollector = new AssemblyInfoCollector(path);
-            Nodes = new ObservableCollection<Node>();
+            var Nodes = new ObservableCollection<Node>();
             var namespaces = asmCollector.Namespaces;
             foreach (var data in namespaces.Keys)
             {
@@ -68,53 +76,44 @@ namespace WPF
                 foreach(var type in namespaces[data])
                 {
                     var typeNode = new Node();
-                    var fieldNode = new Node();
-                    var methodNode = new Node();
-                    var propertyNode = new Node();
-                    var constuctorNode = new Node();
 
-                    typeNode.Nodes.Add(fieldNode);
-                    typeNode.Nodes.Add(methodNode);
-                    typeNode.Nodes.Add(propertyNode);
-                    typeNode.Nodes.Add(constuctorNode);
+                    typeNode.Data = type.ToString();
 
                     foreach(var field in type.Fields)
                     {
                         var fieldNodeData = new Node();
                         fieldNodeData.Data = field.ToString();
-                        typeNode.Nodes[0].Nodes.Add(fieldNodeData);
+                        typeNode.Nodes.Add(fieldNodeData);
                     }
                     foreach (var method in type.Methods)
                     {
                         var methodNodeData = new Node();
                         methodNodeData.Data = method.ToString();
-                        typeNode.Nodes[1].Nodes.Add(methodNodeData);
+                        typeNode.Nodes.Add(methodNodeData);
                     }
                     foreach (var property in type.Properties)
                     {
                         var propertyNodeData = new Node();
                         propertyNodeData.Data = property.ToString();
-                        typeNode.Nodes[2].Nodes.Add(propertyNodeData);
+                        typeNode.Nodes.Add(propertyNodeData);
                     }
                     foreach (var constructor in type.Constructors)
                     {
                         var constructorNodeData = new Node();
                         constructorNodeData.Data = constructor.ToString();
-                        typeNode.Nodes[3].Nodes.Add(constructorNodeData);
+                        typeNode.Nodes.Add(constructorNodeData);
                     }
-
+                    node.Nodes.Add(typeNode);
 
                 }
                 Nodes.Add(node);
             }
-            _treeView.ItemsSource = Nodes;
+            Namespaces = Nodes;
+            
         }
 
+        public TreeViewModel() { }
 
-        public TreeViewModel(TreeView treeview)
-        {
-            _treeView = treeview;
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
