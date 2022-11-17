@@ -15,6 +15,12 @@ namespace MainLibrary
 
         private string _path;
 
+        public Dictionary<string, List<TypeInfoCollector>> Namespaces
+        {
+            get { return _namespaceTypes; }
+            
+        }
+
         public AssemblyInfoCollector(string pathToDll)
         {
             _path = pathToDll;
@@ -110,6 +116,7 @@ namespace MainLibrary
 
             return extensionMethods;
         }
+
 
         public void ConsoleWrite()
         {
