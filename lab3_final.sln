@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab3_final", "lab3_final\lab3_final.csproj", "{457B4411-03D0-4DB3-8119-7A99DE8BEA26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lab3_final", "lab3_final\lab3_final.csproj", "{457B4411-03D0-4DB3-8119-7A99DE8BEA26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainLibrary", "MainLibrary\MainLibrary.csproj", "{D57665D8-F697-48AE-B087-407BEAAAD27A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainLibrary", "MainLibrary\MainLibrary.csproj", "{D57665D8-F697-48AE-B087-407BEAAAD27A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "WPF\WPF.csproj", "{A2D95209-85DD-4E61-9661-80805CCC3C38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPF", "WPF\WPF.csproj", "{A2D95209-85DD-4E61-9661-80805CCC3C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{CDDDDB8F-9423-412D-9D3E-C5A2F3FD5D46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A2D95209-85DD-4E61-9661-80805CCC3C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2D95209-85DD-4E61-9661-80805CCC3C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2D95209-85DD-4E61-9661-80805CCC3C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDDDDB8F-9423-412D-9D3E-C5A2F3FD5D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDDDDB8F-9423-412D-9D3E-C5A2F3FD5D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDDDDB8F-9423-412D-9D3E-C5A2F3FD5D46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDDDDB8F-9423-412D-9D3E-C5A2F3FD5D46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
